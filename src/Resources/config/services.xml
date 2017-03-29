@@ -14,7 +14,7 @@
     </service>
 
     <service id="gdbots_crypto.twig.crypto_extension" class="Gdbots\Bundle\CryptoBundle\Twig\CryptoExtension" public="false">
-      <argument type="service" id="crypto_key"/>
+      <argument type="service" id="gdbots_crypto.service"/>
       <argument>%kernel.debug%</argument>
       <tag name="twig.extension"/>
     </service>
