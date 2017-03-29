@@ -18,6 +18,11 @@
       <argument>%kernel.debug%</argument>
       <tag name="twig.extension"/>
     </service>
+    
+    <service id="gdbots_crypto.service" class="Gdbots\Bundle\CryptoBundle\Service\CryptoService">
+      <argument type="service" id="crypto_key"/>
+      <argument>%kernel.debug%</argument>
+    </service>
   </services>
 
 </container>

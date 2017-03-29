@@ -5,22 +5,23 @@ namespace Gdbots\Bundle\CryptoBundle\Twig;
 use Defuse\Crypto\Crypto;
 use Defuse\Crypto\Exception\CryptoException;
 use Defuse\Crypto\Key;
+use Gdbots\Bundle\CryptoBundle\Service\CryptoService;
 
 class CryptoExtension extends \Twig_Extension
 {
-    /** @var Key */
-    protected $key;
+    /** @var CryptoService */
+    protected $svc;
 
-    /** @var bool */
+    /** @var boolean */
     protected $debug = false;
 
     /**
-     * @param Key $key
+     * @param CryptoService $svc
      * @param bool $debug
      */
-    public function __construct(Key $key, $debug = false)
+    public function __construct(CryptoService $svc, $debug = false)
     {
-        $this->key = $key;
+        $this->svc = $svc;
         $this->debug = (bool) $debug;
     }
 
@@ -51,21 +52,14 @@ class CryptoExtension extends \Twig_Extension
      * @return string
      *
      * @throws \Exception
-     * @throws CryptoException
      */
     public function encrypt($string)
     {
-        if (empty($string)) {
-            return null;
+        if ( ($enc = $this->svc->encrypt($string)) !== false ) {
+            return $enc;
         }
-
-        try {
-            return Crypto::encrypt($string, $this->key);
-        } catch (\Exception $e) {
-            if ($this->debug) {
-                throw $e;
-            }
-        }
+        
+        return null;
     }
 
     /**
@@ -76,20 +70,13 @@ class CryptoExtension extends \Twig_Extension
      * @return string
      *
      * @throws \Exception
-     * @throws CryptoException
      */
     public function decrypt($string)
     {
-        if (empty($string)) {
-            return null;
+        if ( ($dec = $this->svc->decrypt($string)) !== false ) {
+            return $dec;
         }
-
-        try {
-            return Crypto::decrypt($string, $this->key);
-        } catch (\Exception $e) {
-            if ($this->debug) {
-                throw $e;
-            }
-        }
+        
+        return null;
     }
 }
