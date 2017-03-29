@@ -19,6 +19,7 @@ phpunit.xml
 .idea/
 .project
 .settings
+nbproject/
 
 # Compiled source #
 ###################
@@ -62,3 +63,4 @@ Thumbs.db
 # Vagrant provisioning #
 ########################
 .vagrant/
+/nbproject/private/
